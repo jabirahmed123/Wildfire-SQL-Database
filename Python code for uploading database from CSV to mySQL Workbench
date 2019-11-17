@@ -1,0 +1,24 @@
+Python code used for uploading database from CSV to mySQL Workbench
+from db_utils import DB
+import pandas as pd
+import numpy as np
+import datetime as dt
+import time
+df = pd.read_csv('MTBS.csv')
+columns = df.columns
+columns
+new_cols = [col.lower() for col in columns]
+new_cols
+db = DB('data_base')
+df.columns
+df.dtypes
+def table_builder(columns):
+    res = ''
+    for col in columns:
+        res += col
+        res += ' TEXT'
+        res += ' NULL, '
+    print(res)
+    table_builder(new_cols)
+    db.insert(df, 'MTBS', if_exists='append', index=False, chunksize=1000)
+    
